@@ -33,7 +33,7 @@ public class PointCPTest
    */
   public static void main(String[] args)
   {
-    PointCP point;
+    PointCP4 point;
 
     System.out.println("Cartesian-Polar Coordinates Conversion Program");
 
@@ -158,6 +158,6 @@ public class PointCPTest
       isOK = false;
     }
     //Return a new PointCP object
-    return (new PointCP(coordType, a, b));
+    return (new PointCP4(coordType, a, b));
   }
 }
