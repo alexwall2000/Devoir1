@@ -8,18 +8,18 @@ public class PointCP2 extends PointCP5
    * coordinates that are being dealt with.
    */
   private char typeCoord;
-  
+
   /**
-   * Contains the current value of rho 
+   * Contains the current value of rho
    */
   private double xOrRho;
-  
+
   /**
-   * Contains the current value of THETA 
+   * Contains the current value of THETA
    */
-  private double xOrTheta;
-	
-  
+  private double yOrTheta;
+
+
   //Constructors ******************************************************
 
   /**
@@ -27,54 +27,62 @@ public class PointCP2 extends PointCP5
    */
   public PointCP2(char typeCoord, double xOrRho, double yOrTheta)
   {
-	super(typeCoord, xOrRho, yOrTheta);
-	this.typeCoord = typeCoord;
-	this.xOrRho = xOrRho;	
+    super(typeCoord, xOrRho, yOrTheta);
+
+  if (typeCoord == 'P'){
+    this.typeCoord = 'P';
+    this.xOrRho = xOrRho;
+    this.yOrTheta = yOrTheta;
+  }else{
+    double temp = Math.cos(Math.toRadians(yOrTheta)) * xOrRho;
+    this.yOrTheta = (Math.sin(Math.toRadians(yOrTheta)) * xOrRho);
+    this.xOrRho = temp;
+    this.typeCoord = 'P';
+  }
+
 
 	}
-	
 
 
-	
-  
+
+
+
   //Instance methods **************************************************
- 
- 
+
+
   public double getX()
-  {  
+  {
     return (Math.cos(Math.toRadians(yOrTheta)) * xOrRho);
   }
-  
+
   public double getY()
-  {  
+  {
     return (Math.sin(Math.toRadians(yOrTheta)) * xOrRho);
   }
-  
+
   public double getRho()
   {
     return xOrRho;
   }
-  
+
   public double getTheta()
   {
-    return yOrTheta; 
+    return yOrTheta;
   }
-  
-	
+
+
   /**
    * Converts Cartesian coordinates to Polar coordinates.
    */
   public void convertStorageToPolar()
   {
-	typeCoord = 'P';
   }
-	
+
   /**
    * Converts Polar coordinates to Cartesian coordinates.
    */
   public void convertStorageToCartesian()
   {
-    typeCoord = 'C';	
   }
 
   /**
@@ -91,7 +99,7 @@ public class PointCP2 extends PointCP5
     // will be squared later.
     double deltaX = getX() - pointB.getX();
     double deltaY = getY() - pointB.getY();
-    
+
     return Math.sqrt((Math.pow(deltaX, 2) + Math.pow(deltaY, 2)));
   }
 
@@ -108,7 +116,7 @@ public class PointCP2 extends PointCP5
     double radRotation = Math.toRadians(rotation);
     double X = getX();
     double Y = getY();
-        
+
     return new PointCP2('C',
       (Math.cos(radRotation) * X) - (Math.sin(radRotation) * Y),
       (Math.sin(radRotation) * X) + (Math.cos(radRotation) * Y));
@@ -121,11 +129,7 @@ public class PointCP2 extends PointCP5
    */
   public String toString()
   {
-	if (typeCoord == 'P'){
 		return "Polar coordinates are stored as" + "[" + getRho() + "," + getTheta() + "]";
-	}
-	else{
-		return "Cartesian coordinates are computed as" + "[" + getX() + "," + getY() + "]";
-	}
+
   }
 }
